@@ -1,13 +1,17 @@
 package com.example.emt1.config;
 
-import com.example.emt1.model.Author;
-import com.example.emt1.model.Book;
-import com.example.emt1.model.Category;
-import com.example.emt1.model.Country;
+import com.example.emt1.model.domain.Author;
+import com.example.emt1.model.domain.Book;
+import com.example.emt1.model.domain.User;
+import com.example.emt1.model.enumerations.Category;
+import com.example.emt1.model.domain.Country;
+import com.example.emt1.model.enumerations.Role;
 import com.example.emt1.repository.AuthorRepository;
 import com.example.emt1.repository.BookRepository;
 import com.example.emt1.repository.CountryRepository;
+import com.example.emt1.repository.UserRepository;
 import jakarta.annotation.PostConstruct;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -15,14 +19,17 @@ import java.util.List;
 
 @Component
 public class DataInitializer {
+    private final PasswordEncoder passwordEncoder;
     private final AuthorRepository authorRepository;
     private final BookRepository bookRepository;
     private final CountryRepository countryRepository;
-
-    public DataInitializer(AuthorRepository authorRepository, BookRepository bookRepository, CountryRepository countryRepository) {
+    private final UserRepository userRepository;
+    public DataInitializer(PasswordEncoder passwordEncoder, AuthorRepository authorRepository, BookRepository bookRepository, CountryRepository countryRepository, UserRepository userRepository) {
+        this.passwordEncoder = passwordEncoder;
         this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
         this.countryRepository = countryRepository;
+        this.userRepository = userRepository;
     }
 
     private final List<Author> authors = new ArrayList<>();
@@ -31,7 +38,7 @@ public class DataInitializer {
     private final List<Category> categories = new ArrayList<>();
 
     @PostConstruct
-    public void init(){
+    public void init() {
         categories.add(Category.FANTASY);
         categories.add(Category.BIOGRAPHY);
         categories.add(Category.DRAMA);
@@ -59,6 +66,21 @@ public class DataInitializer {
         books.add(new Book( "Book3", categories.get(1), author1, 2));
 
         bookRepository.saveAll(books);
+
+        userRepository.save(new User(
+                "at",
+                passwordEncoder.encode("at"),
+                "Ana",
+                "Todorovska",
+                Role.ROLE_LIBRARIAN
+        ));
+        userRepository.save(new User(
+                "user",
+                passwordEncoder.encode("user"),
+                "User",
+                "User",
+                Role.ROLE_USER
+        ));
+
     }
 }
-

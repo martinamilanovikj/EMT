@@ -1,13 +1,13 @@
-package com.example.emt1.service.Impl;
+package com.example.emt1.service.domain.Impl;
 
 
-import com.example.emt1.model.Book;
-import com.example.emt1.model.Category;
+import com.example.emt1.model.domain.Book;
+import com.example.emt1.model.enumerations.Category;
 import com.example.emt1.model.exceptions.InvalidAuthorId;
 import com.example.emt1.model.exceptions.InvalidBookIdException;
 import com.example.emt1.repository.BookRepository;
-import com.example.emt1.service.AuthorService;
-import com.example.emt1.service.BookService;
+import com.example.emt1.service.domain.AuthorService;
+import com.example.emt1.service.domain.BookService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -24,9 +24,9 @@ public class BookServiceImpl implements BookService {
     }
 
     @Override
-
     public List<Book> findAll() {
         return bookRepository.findAll();
+
     }
 
     @Override
@@ -57,6 +57,7 @@ public class BookServiceImpl implements BookService {
 
     @Override
     public void deleteById(Long id) {
+
         bookRepository.deleteById(id);
     }
 

@@ -1,5 +1,6 @@
-package com.example.emt1.model;
+package com.example.emt1.model.domain;
 
+import com.example.emt1.model.enumerations.Category;
 import jakarta.persistence.*;
 import lombok.Data;
 

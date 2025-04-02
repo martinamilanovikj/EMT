@@ -1,14 +1,13 @@
-package com.example.emt1.service.Impl;
+package com.example.emt1.service.domain.Impl;
 
-import com.example.emt1.model.Country;
+import com.example.emt1.model.domain.Country;
 import com.example.emt1.model.exceptions.InvalidCountryId;
 import com.example.emt1.repository.CountryRepository;
-import com.example.emt1.service.CountryService;
+import com.example.emt1.service.domain.CountryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Optional;
-
 @Service
 public class CountryServiceImpl implements CountryService {
     private final CountryRepository countryRepository;

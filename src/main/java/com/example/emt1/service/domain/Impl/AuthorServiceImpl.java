@@ -1,12 +1,11 @@
-package com.example.emt1.service.Impl;
+package com.example.emt1.service.domain.Impl;
 
-
-import com.example.emt1.model.Author;
+import com.example.emt1.model.domain.Author;
 import com.example.emt1.model.exceptions.InvalidAuthorId;
 import com.example.emt1.model.exceptions.InvalidCountryId;
 import com.example.emt1.repository.AuthorRepository;
-import com.example.emt1.service.AuthorService;
-import com.example.emt1.service.CountryService;
+import com.example.emt1.service.domain.AuthorService;
+import com.example.emt1.service.domain.CountryService;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +34,8 @@ public class AuthorServiceImpl implements AuthorService {
 
     @Override
     public Optional<Author> findById(Long id) {
-        return Optional.of(this.authorRepository.findById(id).orElseThrow(InvalidAuthorId::new));    }
+        return Optional.of(this.authorRepository.findById(id).orElseThrow(InvalidAuthorId::new));
+    }
 
     @Override
     public Optional<Author> update(Long id, String name, String surname, Long countryId) {
@@ -50,4 +50,5 @@ public class AuthorServiceImpl implements AuthorService {
     public void deleteById(Long id) {
         authorRepository.deleteById(id);
     }
+
 }

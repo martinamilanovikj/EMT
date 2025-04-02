@@ -1,4 +1,4 @@
-package com.example.emt1.model;
+package com.example.emt1.model.enumerations;
 
 public enum Category {
     NOVEL,

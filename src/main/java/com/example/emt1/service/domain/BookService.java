@@ -1,11 +1,13 @@
-package com.example.emt1.service;
+package com.example.emt1.service.domain;
+
+import com.example.emt1.model.domain.Book;
+import com.example.emt1.model.enumerations.Category;
 
 import java.util.List;
 import java.util.Optional;
-import com.example.emt1.model.Book;
-import com.example.emt1.model.Category;
 
 public interface BookService {
+
     List<Book> findAll();
     Optional<Book> create(String name, Category category, Long authorId, Integer availableCopies);
     Optional<Book> findById(Long id);
