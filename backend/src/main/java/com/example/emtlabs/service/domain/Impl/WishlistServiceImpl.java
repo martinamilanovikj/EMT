@@ -28,7 +28,7 @@ public class WishlistServiceImpl implements WishlistService {
     @Override
     public Optional<Wishlist> findByUserUsername(String username) {
         User user = userRepository.findByUsername(username).orElseThrow(()->new UserNotFoundException("User not found"));
-        return wishlistRepository.findByUser(user);
+        return wishlistRepository.findByUserUsername(username);
     }
 
     @Override

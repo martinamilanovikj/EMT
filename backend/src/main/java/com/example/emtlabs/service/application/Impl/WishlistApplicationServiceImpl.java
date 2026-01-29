@@ -6,6 +6,7 @@ import com.example.emtlabs.model.domain.Wishlist;
 import com.example.emtlabs.service.application.WishlistApplicationService;
 import com.example.emtlabs.service.domain.BookService;
 import com.example.emtlabs.service.domain.WishlistService;
+import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -39,26 +40,27 @@ public class WishlistApplicationServiceImpl implements WishlistApplicationServic
         return Optional.of(WishlistDto.from(wishlistService.addBookToWishlist(username, bookId)));
     }
 
+    @Transactional
     @Override
     public void rentAllBooks(String username) {
         Wishlist wishlist = wishlistService.findByUserUsername(username)
-                .orElseThrow(() -> new IllegalArgumentException("Wishlist not found for user: " + username));
+                .orElseThrow(() ->
+                        new IllegalArgumentException("Wishlist not found for user: " + username)
+                );
 
-        wishlist.getBooks().forEach(book -> {
-            if (book.getAvailableCopies() > 0) {
-                book.setAvailableCopies(book.getAvailableCopies() - 1);
-            } else {
-                throw new IllegalStateException("Cannot rent book: No available copies");
+        for (Book book : wishlist.getBooks()) {
+            if (book.getAvailableCopies() <= 0) {
+                throw new IllegalStateException(
+                        "Cannot rent book: " + book.getName() + " has no available copies"
+                );
             }
-        });
-
-
-        wishlistService.save(wishlist);
+            book.setAvailableCopies(book.getAvailableCopies() - 1);
+        }
 
 
         wishlist.getBooks().clear();
 
         wishlistService.save(wishlist);
-
     }
+
 }

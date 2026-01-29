@@ -9,6 +9,7 @@ import java.util.List;
 
 @Data
 @Entity
+@Table(name = "wishlists")
 public class Wishlist {
 
     @Id
@@ -18,10 +19,16 @@ public class Wishlist {
     private LocalDateTime dateCreated;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_username", nullable = false)
     private User user;
 
     @ManyToMany
-    private List<Book> books;
+    @JoinTable(
+            name = "wishlist_books",
+            joinColumns = @JoinColumn(name = "wishlist_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id")
+    )
+    private List<Book> books = new ArrayList<>();
 
     public Wishlist() {
     }
